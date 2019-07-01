@@ -70,14 +70,22 @@ foreach($installed in $installedExtensions)
         Write-Host "Previous version is $($installed.ProductProperties.Version) - $($installed.Name)" -ForegroundColor Red
         Write-Host "Current version is $($prevEntry.ProductProperties.Version) - $($prevEntry.Name)" -ForegroundColor Green
         Write-Host ""
-        $Readhost = Read-Host " Do you want to delete previous version ($($installed.ProductProperties.Version)) (y/n)?"
+        $Readhost = Read-Host "Do you want to delete previous version ($($installed.ProductProperties.Version)) (y/n)?"
         Switch ($ReadHost) 
-         { 
-           Y {Write-host " Yes, removing older extension version"; Remove-AzsAzureBridgeDownloadedProduct -Name $installed.Name -ActivationName $activationName -ResourceGroupName $activationRG -Force -Confirm:$false -ErrorAction Continue} 
-           N {Write-Host " No, not removing older extension version"} 
-           Default {Write-Host " No, not removing older extension version"} 
-         }
-
+        { 
+            Y 
+            {
+                Write-host "Yes, removing older extension version"; Remove-AzsAzureBridgeDownloadedProduct -Name $installed.Name -ActivationName $activationName -ResourceGroupName $activationRG -Force -Confirm:$false -ErrorAction Continue
+            } 
+            N 
+            {
+                Write-Host "No, not removing older extension version"
+            } 
+            Default
+            {
+                Write-Host "No, not removing older extension version"
+            } 
+        }
         Write-Output ""
     }
     $prevDisplayName = $installed.DisplayName
