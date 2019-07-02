@@ -21,7 +21,7 @@ $bridgeActivation = Get-AzsAzureBridgeActivation -ResourceGroupName $activationR
 $activationName = $bridgeActivation.Name
 
 # Get available Microsoft extensions and compare with extensions already downloaded to Azure Stack marketplace
-Write-Host "Comparing installed extensions with available extensions from the Marketplace"
+Write-Host "Comparing installed extensions in the Marketplace with available extensions from Azure"
 $availableExtensions = ((Get-AzsAzureBridgeProduct -ActivationName $activationName -ResourceGroupName $activationRG -ErrorAction SilentlyContinue | Where-Object {($_.ProductKind -eq "virtualMachineExtension") -and ($_.Name -like "*microsoft*")}).Name) -replace "default/", ""
 $myExtensions = ((Get-AzsAzureBridgeDownloadedProduct -ActivationName $activationName -ResourceGroupName $activationRG -ErrorAction SilentlyContinue | Where-Object {($_.ProductKind -eq "virtualMachineExtension") -and ($_.Name -like "*microsoft*")}).Name) -replace "default/", ""
 $diffExtensions = Compare-Object $myExtensions $availableExtensions 
